@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parrillas Lourdes - Sabor Intenso</title>
+    <title>Parrillas Lourdes</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@100;100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -18,38 +20,46 @@
         /* Estilo para la galería en cuadrícula */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas, mínimo 280px */
-            gap: 30px; /* Espacio entre las imágenes */
-            padding: 0 20px; /* Espacio lateral */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        @media (max-width: 639px) { /* Breakpoint 'sm' de Tailwind */
+            .gallery-grid {
+                grid-template-columns: 1fr; /* Una columna en móviles */
+                padding: 0 15px; /* Ajusta el padding en móviles */
+            }
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px; /* Bordes redondeados */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra llamativa */
-            background-color: #1a202c; /* Fondo oscuro para los items */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background-color: #1a202c;
             color: white;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Distribuye el espacio */
-            transition: transform 0.3s ease;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .gallery-item:hover {
-            transform: translateY(-10px); /* Efecto de elevación al pasar el mouse */
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 250px; /* Altura fija para las imágenes de la galería */
-            object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+            height: 250px;
+            object-fit: cover;
             cursor: pointer;
             transition: transform 0.4s ease-in-out;
         }
 
         .gallery-item img:hover {
-            transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+            transform: scale(1.05);
         }
 
         .image-info {
@@ -64,28 +74,27 @@
         }
 
         .buy-button {
-            background-color: #e53e3e; /* Rojo vibrante */
-            transition: background-color 0.3s ease;
+            background-color: #e53e3e;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .buy-button:hover {
-            background-color: #c53030; /* Rojo más oscuro al pasar el mouse */
+            background-color: #c53030;
+            transform: scale(1.02);
         }
-
 
         /* Estilo para el modal de imagen */
         .modal {
-            display: none; /* Oculto por defecto */
+            display: none;
             position: fixed;
-            z-index: 100; /* Asegura que esté por encima de todo */
+            z-index: 1000;
             padding-top: 60px;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.95); /* Fondo más oscuro y opaco */
+            background-color: rgba(0,0,0,0.95);
         }
 
         .modal-content {
@@ -94,6 +103,14 @@
             max-width: 90%;
             max-height: 95%;
             border-radius: 10px;
+            object-fit: contain;
+        }
+
+        #caption {
+            color: #f1f1f1;
+            font-size: 1.2em;
+            margin-top: 20px;
+            text-align: center;
         }
 
         .modal-content, #caption {
@@ -102,7 +119,7 @@
         }
 
         @keyframes zoom {
-            from {transform: scale(0.5)} /* Empieza más pequeño */
+            from {transform: scale(0.5)}
             to {transform: scale(1)}
         }
 
@@ -111,7 +128,7 @@
             top: 20px;
             right: 40px;
             color: #f1f1f1;
-            font-size: 50px; /* Icono más grande */
+            font-size: 50px;
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
@@ -126,14 +143,15 @@
 
         /* Estilo para el encabezado */
         .header-bg {
-            background-image: url('uploaded:fondo1.jpg-0be665e7-ffbf-424c-a179-aed7e3abbafb');
+            /* Asegúrate de que la ruta de la imagen sea correcta */
+            background-image: url('fondo.jpg');
             background-size: cover;
             background-position: center;
             position: relative;
         }
 
         .header-overlay {
-            background-color: rgba(0, 0, 0, 0.0); /* Capa oscura sobre la imagen */
+            background-color: rgba(0, 0, 0, 0.0); /* Capa oscura más visible */
             position: absolute;
             top: 0;
             left: 0;
@@ -143,7 +161,7 @@
 
         .header-content {
             position: relative;
-            z-index: 1; /* Asegura que el contenido esté sobre la capa oscura */
+            z-index: 1;
         }
 
         /* Estilo para los botones sociales */
@@ -151,39 +169,39 @@
             transition: transform 0.3s ease;
         }
         .social-button:hover {
-            transform: scale(1.2); /* Efecto de escala al pasar el mouse */
+            transform: scale(1.2);
         }
-
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 font-sans">
 
-    <header class="header-bg h-96 flex items-center justify-center">
-    <img src="fondo.jpg" alt="" style="width:1280px; height:auto;">
+    <header class="header-bg min-h-[50vh] md:min-h-[60vh] flex items-center justify-center text-center">
         <div class="header-overlay"></div>
-        <div class="header-content text-center">
- 
-            <p class="text-9xl md:text-8xl text-red-500 mt-4 italic">¡COME SANO SIEMPRE!</p> </div>
+        <div class="header-content">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-red-500 italic font-extrabold leading-tight"></h1>
+        </div>
     </header>
 
     <nav class="bg-gray-800 p-4 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="flex space-x-6 mb-4 md:mb-0">
-                <a href="#galeria" class="text-gray-300 hover:text-red-500 transition duration-300">Galería</a>
-                <a href="#registro" class="text-gray-300 hover:text-red-500 transition duration-300">Registro</a>
-                <a href="#carrito" class="text-gray-300 hover:text-red-500 transition duration-300">Carrito de Compras</a>
+            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 mb-4 md:mb-0">
+                <a href="#galeria" class="text-gray-300 hover:text-red-500 transition duration-300 py-2 md:py-0">Galería</a>
+                <a href="#registro" class="text-gray-300 hover:text-red-500 transition duration-300 py-2 md:py-0">Registro</a>
+                <a href="#carrito" class="text-gray-300 hover:text-red-500 transition duration-300 py-2 md:py-0">Carrito de Compras</a>
             </div>
-            <div class="flex space-x-6">
-                <a href="https://wa.me/1155709234" target="_blank" class="social-button text-gray-300 hover:text-green-500"><i class="fab fa-whatsapp text-3xl"></i></a>
-                <a href="https://www.instagram.com/Parrillasagaslourdes" target="_blank" class="social-button text-gray-300 hover:text-pink-500"><i class="fab fa-instagram text-3xl"></i></a>
-                <a href="https://www.google.com/maps/search/?api=1&query=YOUR_LOCATION" target="_blank" class="social-button text-gray-300 hover:text-red-500 flex items-center"><i class="fas fa-map-marker-alt text-3xl mr-2"></i> Ubicación</a>
+            <div class="flex space-x-6 justify-center md:justify-start w-full md:w-auto">
+                <a href="https://wa.me/1155709234" target="_blank" aria-label="WhatsApp" class="social-button text-gray-300 hover:text-green-500"><i class="fab fa-whatsapp text-3xl"></i></a>
+                <a href="https://www.instagram.com/Parrillasagaslourdes" target="_blank" aria-label="Instagram" class="social-button text-gray-300 hover:text-pink-500"><i class="fab fa-instagram text-3xl"></i></a>
+                <a href="https://www.google.com/maps/search/?api=1&query=YOUR_LOCATION" target="_blank" aria-label="Ubicación" class="social-button text-gray-300 hover:text-red-500 flex items-center">
+                    <i class="fas fa-map-marker-alt text-3xl mr-2"></i> <span class="text-base md:text-lg">Ubicación</span>
+                </a>
             </div>
         </div>
     </nav>
 
-    <section id="galeria" class="py-16 bg-gray-900">
-        <div class="container mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12 text-white">Nuestros Productos</h2>
+    <section id="galeria" class="py-12 md:py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-white">Nuestros Productos</h2>
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <img src="foto1.jpg" alt="Anafe M-400" class="product-image">
@@ -194,56 +212,56 @@
                 </div>
                 <div class="gallery-item">
                     <img src="foto2.jpg" alt="M-600 Con Fladon" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-600 Con Fladon</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto3.jpg" alt="M-600 Con Tapa y Pirometro" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-600 Con Tapa y Pirometro</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
                 <div class="gallery-item">
                     <img src="foto4.jpg" alt="M-800 con Tapa" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-800 con Tapa</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto5.jpg" alt="M-800 con Faldon" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-800 con Faldon</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto6.jpg" alt="Mueble M-800" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Mueble M-800</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto7.jpg" alt="M-600 con Tapa Carro y Porta Garrafa" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-600 con Tapa Carro y Porta Garrafa</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto8.jpg" alt="M-800 con Tapa y Pirometro" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">M-800 con Tapa y Pirometro</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto9.jpg" alt="Parrilla a Gas Envasado con Termómetro" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla a Gas Envasado con Termómetro</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
@@ -257,61 +275,61 @@
                 </div>
                 <div class="gallery-item">
                     <img src="foto11.jpg" alt="Parrilla Modelo 11" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 11</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto12.jpg" alt="Parrilla Modelo 12" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 12</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
                 <div class="gallery-item">
                     <img src="foto13.jpg" alt="Parrilla Modelo 13" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 13</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto14.jpg" alt="Parrilla Modelo 14" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 14</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto15.jpg" alt="Parrilla Modelo 15" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 15</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto16.jpg" alt="Parrilla Modelo 16" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 16</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto17.jpg" alt="Parrilla Modelo 17" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 17</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto18.jpg" alt="Parrilla Modelo 18" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 18</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                 <div class="gallery-item">
+                <div class="gallery-item">
                     <img src="foto19.jpg" alt="Parrilla Modelo 19" class="product-image">
                     <div class="image-info">
                         <div class="image-description">Parrilla Modelo 19</div>
@@ -320,50 +338,49 @@
                 </div>
                 <div class="gallery-item">
                     <img src="foto20.jpg" alt="Parrilla Modelo 20" class="product-image">
-                     <div class="image-info">
+                    <div class="image-info">
                         <div class="image-description">Parrilla Modelo 20</div>
                         <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full mt-2 buy-button shadow-lg">Comprar Ahora</button>
                     </div>
                 </div>
-                </div>
-        </div>
-    </section>
-
-    <section id="registro" class="py-16 bg-gray-800 text-gray-200">
-        <div class="container mx-auto text-center max-w-md">
-            <h2 class="text-4xl font-bold mb-8 text-white">Únete a la Comunidad</h2>
-            <p class="mb-6 text-gray-400">Regístrate para recibir ofertas exclusivas y novedades.</p>
-            <div class="flex flex-col space-y-4">
-                <input type="text" placeholder="Nombre Completo" class="p-3 rounded-lg border border-gray-700 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:border-red-500">
-                <input type="email" placeholder="Correo Electrónico" class="p-3 rounded-lg border border-gray-700 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:border-red-500">
-                <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg">Registrarse</button>
             </div>
         </div>
     </section>
 
-    <section id="carrito" class="py-16 bg-gray-900 text-gray-200">
-        <div class="container mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white">Tu Carrito de Compras</h2>
-            <p class="mb-6 text-gray-400">Revisa los productos que has seleccionado.</p>
-            <div class="mt-8 p-6 bg-gray-800 rounded-lg shadow-lg max-w-xl mx-auto">
-                <p class="text-gray-400">Tu carrito está vacío. ¡Explora nuestra galería!</p>
-                </div>
+    <section id="registro" class="py-12 md:py-16 bg-gray-800 text-gray-200">
+        <div class="container mx-auto text-center max-w-sm md:max-w-md px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-white">Únete a la Comunidad</h2>
+            <p class="mb-4 md:mb-6 text-gray-400 text-base md:text-lg">Regístrate para recibir ofertas exclusivas y novedades.</p>
+            <div class="flex flex-col space-y-4">
+                <input type="text" placeholder="Nombre Completo" aria-label="Nombre Completo" class="p-3 rounded-lg border border-gray-700 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="email" placeholder="Correo Electrónico" aria-label="Correo Electrónico" class="p-3 rounded-lg border border-gray-700 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800">Registrarse</button>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-gray-400 p-8 text-center text-sm">
+    <section id="carrito" class="py-12 md:py-16 bg-gray-900 text-gray-200">
+        <div class="container mx-auto text-center px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-white">Tu Carrito de Compras</h2>
+            <p class="mb-4 md:mb-6 text-gray-400 text-base md:text-lg">Revisa los productos que has seleccionado.</p>
+            <div class="mt-8 p-6 bg-gray-800 rounded-lg shadow-lg max-w-md mx-auto">
+                <p class="text-gray-400">Tu carrito está vacío. ¡Explora nuestra galería!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-400 p-6 md:p-8 text-center text-sm">
         <p>© 2023 Parrillas Lourdes. Todos los derechos reservados.</p>
         <p class="mt-2">Diseñado con pasión por el buen asado.</p>
     </footer>
 
     <div id="imageModal" class="modal">
-        <span class="close">×</span>
-        <img class="modal-content" id="img01">
+        <span class="close" aria-label="Cerrar">×</span>
+        <img class="modal-content" id="img01" alt="Imagen ampliada del producto">
         <div id="caption" class="text-center text-gray-300 text-lg mt-4"></div>
     </div>
 
     <script>
-        // Script para el modal de imagen
         var modal = document.getElementById("imageModal");
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
@@ -373,6 +390,7 @@
             img.onclick = function(){
                 modal.style.display = "block";
                 modalImg.src = this.src;
+                modalImg.alt = this.alt;
                 captionText.innerHTML = this.alt;
             }
         });
@@ -382,22 +400,24 @@
             modal.style.display = "none";
         }
 
-        // Cerrar el modal haciendo click fuera de la imagen
         modal.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
 
-        // Script para los botones de compra (ejemplo simple)
         var buyButtons = document.querySelectorAll(".buy-button");
         buyButtons.forEach(button => {
             button.onclick = function() {
-                // Aquí iría la lógica real para agregar al carrito
                 alert("¡Producto listo para el asado! (funcionalidad placeholder)");
             }
         });
 
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
     </script>
 
 </body>

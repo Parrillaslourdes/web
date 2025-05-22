@@ -145,8 +145,9 @@
         .header-bg {
             /* Asegúrate de que la ruta de la imagen sea correcta */
             background-image: url('fondo.jpg');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; /* Esto asegura que la imagen cubra todo el área */
+            background-position: center; /* Esto centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
             position: relative;
         }
 
@@ -175,7 +176,7 @@
 </head>
 <body class="bg-gray-900 text-gray-200 font-sans">
 
-    <header class="header-bg min-h-[50vh] md:min-h-[60vh] flex items-center justify-center text-center">
+    <header class="header-bg min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] xl:min-h-[80vh] flex items-center justify-center text-center">
         <div class="header-overlay"></div>
         <div class="header-content">
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-red-500 italic font-extrabold leading-tight"></h1>
@@ -419,6 +420,5 @@
             }
         });
     </script>
-
 </body>
 </html>
